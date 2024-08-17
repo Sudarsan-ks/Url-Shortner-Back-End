@@ -1,16 +1,16 @@
 const express = require("express");
 const { nanoid } = require("nanoid");
 const Url = require("../models/urlModel");
-const auth = require("../auth")
+const auth = require("../auth");
 
 const router = express.Router();
 
-router.post("/originalUrl",auth, async (req, res) => {
+router.post("/originalUrl", auth, async (req, res) => {
   const { originalUrl } = req.body;
   const shortUrl = nanoid(7);
-  const createdBy = req.user._id
+  const createdBy = req.user._id;
   try {
-    const url = new Url({ originalUrl, shortUrl,createdBy });
+    const url = new Url({ originalUrl, shortUrl, createdBy });
     await url.save();
     res.status(201).json({ message: "Url successfully created" });
   } catch (err) {
