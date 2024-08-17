@@ -18,6 +18,9 @@ router.post("/register", async (req, res) => {
     const confirmationToken = jwt.sign({ email }, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
+    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
+      expiresIn: "1h",
+    });
     const newUser = new User({
       email,
       firstName,
@@ -34,7 +37,9 @@ router.post("/register", async (req, res) => {
       subject: "Password Reset",
       html: `<p>Click <a href="${activateUrl}">here</a> to Activate you account </p>`,
     });
-    res.status(201).json({ message: "Registered successfully", newUser });
+    res
+      .status(201)
+      .json({ message: "Registered successfully", newUser, token });
   } catch (err) {
     res.status(400).json({ message: "Error while Registering", err });
   }
