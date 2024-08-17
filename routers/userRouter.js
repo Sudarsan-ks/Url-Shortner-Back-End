@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
     });
     await newUser.save();
 
-    const activateUrl = `${process.env.CLIENT_URL}/user/activate/${confirmationToken}`;
+    const activateUrl = `${process.env.CLIENT_URL}/activate/${confirmationToken}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
