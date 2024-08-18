@@ -2,6 +2,7 @@ const express = require("express");
 const { nanoid } = require("nanoid");
 const Url = require("../models/urlModel");
 const auth = require("../auth");
+const { getDailyCount, getMonthlyCount } = require("./function");
 
 const router = express.Router();
 
@@ -32,6 +33,26 @@ router.get("/:shortUrl", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(404).json({ message: "Error While creating shortUrl" });
+  }
+});
+
+router.get("/daily", async (req, res) => {
+  try {
+    const dailyCount = await getDailyCount();
+    res.status(201).json(dailyCount);
+  } catch (err) {
+    res.status(404).json({ message: "Error while fetching daily count", err });
+  }
+});
+
+router.get("/monthly", async (req, res) => {
+  try {
+    const monthlyCount = await getMonthlyCount();
+    res.status(201).json(monthlyCount);
+  } catch (err) {
+    res
+      .status(404)
+      .json({ message: "Error while fetching monthly count", err });
   }
 });
 
