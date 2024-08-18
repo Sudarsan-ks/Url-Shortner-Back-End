@@ -1,6 +1,6 @@
 const Url = require("../models/urlModel");
 
-export const getDailyCount = async () => {
+const getDailyCount = async () => {
   try {
     const dailyCount = await Url.aggregate([
       {
@@ -19,7 +19,7 @@ export const getDailyCount = async () => {
   }
 };
 
-export const getMonthlyCount = async () => {
+const getMonthlyCount = async () => {
   try {
     const monthlyCount = await Url.aggregate([
       {
@@ -37,3 +37,5 @@ export const getMonthlyCount = async () => {
     console.error("Error while calculating monthlly count", err);
   }
 };
+
+module.exports = { getDailyCount, getMonthlyCount };
