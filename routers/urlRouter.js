@@ -11,7 +11,7 @@ router.post("/originalUrl", auth, async (req, res) => {
   const shortUrl = nanoid(7);
   const createdBy = req.user._id;
   try {
-    const url = new Url({ originalUrl, shortUrl, createdBy });
+    const url = await new Url({ originalUrl, shortUrl, createdBy });
     await url.save();
     res.status(201).json({ message: "Url successfully created" });
   } catch (err) {
