@@ -18,9 +18,6 @@ router.post("/register", async (req, res) => {
     const confirmationToken = jwt.sign({ email }, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
-    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
-      expiresIn: "1h",
-    });
     const newUser = new User({
       email,
       firstName,
@@ -56,7 +53,10 @@ router.post("/login", auth, async (req, res) => {
     if (!user.isActive) {
       return res.status(404).json({ message: "Account not activated" });
     }
-    res.status(201).json({ message: "Login Successfully" });
+    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
+      expiresIn: "1h",
+    });
+    res.status(201).json({ message: "Login Successfully", user, token });
   } catch (err) {
     res.status(404).json({ message: err });
   }
