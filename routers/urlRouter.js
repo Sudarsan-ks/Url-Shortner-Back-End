@@ -11,12 +11,14 @@ router.post("/originalUrl", auth, async (req, res) => {
   const shortUrl = nanoid(7);
   const createdBy = req.user._id;
   try {
-    const url = await new Url({ originalUrl, shortUrl, createdBy });
+    const url = new Url({ originalUrl, shortUrl, createdBy });
     await url.save();
-    res.status(201).json({ message: "Url successfully created" });
+    res.status(201).json({ message: "Url successfully created", shortUrl });
   } catch (err) {
     console.error(err);
-    res.status(404).json({ message: "Error While creating shortUrl" });
+    res
+      .status(404)
+      .json({ message: "Error While creating shortUrl", error: err.message });
   }
 });
 
@@ -32,7 +34,7 @@ router.get("/:shortUrl", async (req, res) => {
     res.redirect(url.originalUrl);
   } catch (err) {
     console.error(err);
-    res.status(404).json({ message: "Error While creating shortUrl" });
+    res.status(404).json({ message: "Error While creating shortUrl" ,error: err.message});
   }
 });
 
@@ -41,7 +43,7 @@ router.get("/daily", async (req, res) => {
     const dailyCount = await getDailyCount();
     res.status(201).json(dailyCount);
   } catch (err) {
-    res.status(404).json({ message: "Error while fetching daily count", err });
+    res.status(404).json({ message: "Error while fetching daily count",error: err.message });
   }
 });
 
@@ -52,7 +54,7 @@ router.get("/monthly", async (req, res) => {
   } catch (err) {
     res
       .status(404)
-      .json({ message: "Error while fetching monthly count", err });
+      .json({ message: "Error while fetching monthly count", error: err.message });
   }
 });
 

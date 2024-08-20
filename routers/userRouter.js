@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const transporter = require("../email");
 const User = require("../models/userModel");
-const auth = require("../auth");
 
 const router = express.Router();
 
@@ -38,7 +37,7 @@ router.post("/register", async (req, res) => {
       .status(201)
       .json({ message: "Registered successfully", newUser});
   } catch (err) {
-    res.status(400).json({ message: "Error while Registering", err });
+    res.status(400).json({ message: "Error while Registering", error: err.message });
   }
 });
 
@@ -84,7 +83,7 @@ router.post("/forgotPassword", async (req, res) => {
   } catch (err) {
     res
       .status(404)
-      .json({ message: "Error while sending the forgot mail", err });
+      .json({ message: "Error while sending the forgot mail", error: err.message });
   }
 });
 
@@ -108,7 +107,7 @@ router.post("/resetPassword/:token", async (req, res) => {
     }
     res
       .status(404)
-      .json({ message: "Error while sending the forgot mail", err });
+      .json({ message: "Error while sending the forgot mail", error: err.messager });
   }
 });
 
@@ -127,7 +126,7 @@ router.get("/activate/:token", async (req, res) => {
   } catch (err) {
     res
       .status(404)
-      .json({ message: "Activation link as Invalid or Expire", err });
+      .json({ message: "Activation link as Invalid or Expire", error: err.message });
   }
 });
 
