@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
     }
 
     const checkMatching = jwt.verify(token, process.env.SECRET_KEY);
-    const user = await User.findOne({ email: checkMatching.email });
+    const user = await User.findOne({ email: checkMatching.id });
     if (!user) {
       return res.status(403).json({ message: "User not found" });
     }
