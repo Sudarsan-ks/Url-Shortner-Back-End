@@ -53,7 +53,7 @@ router.post("/login", auth, async (req, res) => {
     if (!user.isActive) {
       return res.status(404).json({ message: "Account not activated" });
     }
-    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
+    const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
     res.status(201).json({ message: "Login Successfully", user, token });
