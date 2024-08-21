@@ -42,7 +42,7 @@ router.get("/:shortUrl", async (req, res) => {
 router.get("/daily", async (req, res) => {
   try {
     const dailyCount = await getDailyCount();
-    res.status(201).json(dailyCount);
+    res.status(201).json({dailyCount});
   } catch (err) {
     res.status(404).json({ message: "Error while fetching daily count",error: err.message });
   }
@@ -51,7 +51,7 @@ router.get("/daily", async (req, res) => {
 router.get("/monthly", async (req, res) => {
   try {
     const monthlyCount = await getMonthlyCount();
-    res.status(201).json(monthlyCount);
+    res.status(201).json({monthlyCount});
   } catch (err) {
     res
       .status(404)
