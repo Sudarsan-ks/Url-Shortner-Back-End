@@ -38,6 +38,16 @@ router.get("/:shortUrl", async (req, res) => {
   }
 });
 
+router.get("/get/shortUrl", async(req,res)=>{
+  try {
+    const urls = await Url.find();
+    res.status(200).json(urls);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error while getting the urls", error: err.message });
+  }
+})
+
 
 router.get("/daily", async (req, res) => {
   try {
