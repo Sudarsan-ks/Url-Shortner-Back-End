@@ -5,7 +5,7 @@ const getDailyCount = async () => {
     const dailyCount = await Url.aggregate([
       {
         $group: {
-          _id: { $dataToString: { format: "%Y-%m-%d", date: "$date" } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
           count: { $sum: 1 },
         },
       },
@@ -24,7 +24,7 @@ const getMonthlyCount = async () => {
     const monthlyCount = await Url.aggregate([
       {
         $group: {
-          _id: { $dataToString: { format: "%Y-%m", date: "$date" } },
+          _id: { $dateToString: { format: "%Y-%m", date: "$date" } },
           count: { $sum: 1 },
         },
       },
