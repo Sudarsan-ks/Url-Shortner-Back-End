@@ -1,3 +1,4 @@
+
 const Url = require("../models/urlModel");
 
 const getDailyCount = async () => {
@@ -6,16 +7,17 @@ const getDailyCount = async () => {
       {
         $group: {
           _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
-          count: { $sum: 1 },
-        },
+          count: { $sum: 1 }
+        }
       },
       {
-        $sort: { _id: 1 },
-      },
+        $sort: { _id: 1 }
+      }
     ]);
     return dailyCount;
   } catch (err) {
     console.error("Error while calculating daily count", err);
+    throw err;
   }
 };
 
@@ -25,16 +27,17 @@ const getMonthlyCount = async () => {
       {
         $group: {
           _id: { $dateToString: { format: "%Y-%m", date: "$date" } },
-          count: { $sum: 1 },
-        },
+          count: { $sum: 1 }
+        }
       },
       {
-        $sort: { _id: 1 },
-      },
+        $sort: { _id: 1 }
+      }
     ]);
     return monthlyCount;
   } catch (err) {
-    console.error("Error while calculating monthlly count", err);
+    console.error("Error while calculating monthly count", err);
+    throw err;
   }
 };
 
