@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/originalUrl", auth, async (req, res) => {
   const { originalUrl } = req.body;
-  const shortUrl = nanoid(7);
+  const shortUrl = nanoid(11);
   const createdBy = req.user._id;
   try {
     const url = new Url({ originalUrl, shortUrl, createdBy });
