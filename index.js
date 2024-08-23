@@ -27,9 +27,14 @@ app.get("/", (req, res) => {
 app.use("/user", userRouter);
 app.use("/url", urlRouter);
 
-mongoose.connect(process.env.MONGO_URL).then(() => {
-  console.log("MongoDB is successfully connected");
-  app.listen(PORT, () => {
-    console.log(`server is started on port number ${PORT}`);
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB is successfully connected");
+    app.listen(PORT, () => {
+      console.log(`server is started on port number ${PORT}`);
+    });
   });
-});
