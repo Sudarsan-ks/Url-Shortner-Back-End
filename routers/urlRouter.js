@@ -61,13 +61,12 @@ router.get("/daily", async (req, res) => {
         },
       },
     ]);
+    res.status(200).json({ meassage: "DailyCount", dailyCount });
   } catch (err) {
-    res
-      .status(404)
-      .json({
-        message: "Error while fetching daily count",
-        error: err.message,
-      });
+    res.status(404).json({
+      message: "Error while fetching daily count",
+      error: err.message,
+    });
   }
 });
 
@@ -81,13 +80,12 @@ router.get("/monthly", async (req, res) => {
         },
       },
     ]);
+    res.status(200).json({ meassage: "MonthlyCount", dailyCount });
   } catch (err) {
-    res
-      .status(404)
-      .json({
-        message: "Error while fetching monthly count",
-        error: err.message,
-      });
+    res.status(404).json({
+      message: "Error while fetching monthly count",
+      error: err.message,
+    });
   }
 });
 
