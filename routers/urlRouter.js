@@ -51,7 +51,7 @@ router.get("/get/shortUrl", async (req, res) => {
   }
 });
 
-router.get("/daily", async (req, res) => {
+router.get("/daily-count", async (req, res) => {
   try {
     const dailyCount = await Url.aggregate([
       {
@@ -70,7 +70,7 @@ router.get("/daily", async (req, res) => {
   }
 });
 
-router.get("/monthly", async (req, res) => {
+router.get("/monthly-count", async (req, res) => {
   try {
     const monthlyCount = await Url.aggregate([
       {
