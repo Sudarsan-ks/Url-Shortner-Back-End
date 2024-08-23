@@ -56,12 +56,12 @@ router.get("/daily", async (req, res) => {
     const dailyCount = await Url.aggregate([
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
           count: { $sum: 1 },
         },
       },
     ]);
-    res.status(200).json({ meassage: "DailyCount", dailyCount });
+    res.status(200).json({ message: "DailyCount", dailyCount });
   } catch (err) {
     res.status(404).json({
       message: "Error while fetching daily count",
@@ -75,12 +75,12 @@ router.get("/monthly", async (req, res) => {
     const monthlyCount = await Url.aggregate([
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m", date: "$date" } },
+          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
           count: { $sum: 1 },
         },
       },
     ]);
-    res.status(200).json({ meassage: "MonthlyCount", monthlyCount });
+    res.status(200).json({ message: "MonthlyCount", monthlyCount });
   } catch (err) {
     res.status(404).json({
       message: "Error while fetching monthly count",
@@ -88,5 +88,6 @@ router.get("/monthly", async (req, res) => {
     });
   }
 });
+
 
 module.exports = router;
