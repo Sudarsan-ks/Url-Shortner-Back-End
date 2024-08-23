@@ -51,12 +51,12 @@ router.get("/get/shortUrl", async (req, res) => {
   }
 });
 
-router.get("/daily-count", async (req, res) => {
+router.get("/daily", async (req, res) => {
   try {
     const dailyCount = await Url.aggregate([
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
           count: { $sum: 1 },
         },
       },
@@ -70,12 +70,12 @@ router.get("/daily-count", async (req, res) => {
   }
 });
 
-router.get("/monthly-count", async (req, res) => {
+router.get("/monthly", async (req, res) => {
   try {
     const monthlyCount = await Url.aggregate([
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+          _id: { $dateToString: { format: "%Y-%m", date: "$date" } },
           count: { $sum: 1 },
         },
       },
