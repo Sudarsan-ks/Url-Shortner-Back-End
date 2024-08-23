@@ -21,36 +21,6 @@ router.post("/originalUrl", auth, async (req, res) => {
   }
 });
 
-router.get("/:shortUrl", async (req, res) => {
-  const { shortUrl } = req.params;
-  try {
-    const url = await Url.findOne({ shortUrl });
-    if (!url) {
-      return res.status(404).json({ message: "Url not found" });
-    }
-    url.clicks += 1;
-    await url.save();
-    res.status(200).json({ originalUrl: url.originalUrl });
-  } catch (err) {
-    console.error(err);
-    res
-      .status(404)
-      .json({ message: "Error while redirecting", error: err.message });
-  }
-});
-
-router.get("/get/shortUrl", async (req, res) => {
-  try {
-    const urls = await Url.find();
-    res.status(200).json(urls);
-  } catch (err) {
-    console.error(err);
-    res
-      .status(500)
-      .json({ message: "Error while getting the urls", error: err.message });
-  }
-});
-
 router.get("/daily", async (req, res) => {
   try {
     const dailyCount = await Url.aggregate([
@@ -89,5 +59,35 @@ router.get("/monthly", async (req, res) => {
   }
 });
 
+
+router.get("/:shortUrl", async (req, res) => {
+  const { shortUrl } = req.params;
+  try {
+    const url = await Url.findOne({ shortUrl });
+    if (!url) {
+      return res.status(404).json({ message: "Url not found" });
+    }
+    url.clicks += 1;
+    await url.save();
+    res.status(200).json({ originalUrl: url.originalUrl });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(404)
+      .json({ message: "Error while redirecting", error: err.message });
+  }
+});
+
+router.get("/get/shortUrl", async (req, res) => {
+  try {
+    const urls = await Url.find();
+    res.status(200).json(urls);
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Error while getting the urls", error: err.message });
+  }
+});
 
 module.exports = router;

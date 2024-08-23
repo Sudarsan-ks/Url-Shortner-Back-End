@@ -11,14 +11,14 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 
-// const corsOptions = {
-//   origin: [process.env.CLIENT_URL, process.env.CLIENT_URL_NETLIFY],
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   credentials: true,
-//   optionsSuccessStatus: 204,
-// };
+const corsOptions = {
+  origin: [process.env.CLIENT_URL, process.env.CLIENT_URL_NETLIFY],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("Welcome to URL SHORTNER");
@@ -28,10 +28,7 @@ app.use("/user", userRouter);
 app.use("/url", urlRouter);
 
 mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URL,)
   .then(() => {
     console.log("MongoDB is successfully connected");
     app.listen(PORT, () => {
