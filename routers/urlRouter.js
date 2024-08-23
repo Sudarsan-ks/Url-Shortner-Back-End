@@ -80,7 +80,7 @@ router.get("/monthly", async (req, res) => {
         },
       },
     ]);
-    res.status(200).json({ meassage: "MonthlyCount", dailyCount });
+    res.status(200).json({ meassage: "MonthlyCount", monthlyCount });
   } catch (err) {
     res.status(404).json({
       message: "Error while fetching monthly count",
