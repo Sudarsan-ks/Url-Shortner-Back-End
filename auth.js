@@ -7,7 +7,6 @@ const auth = async (req, res, next) => {
     if (!token) {
       return res.status(404).json({ message: "Access Denied" });
     }
-
     const checkMatching = jwt.verify(token, process.env.SECRET_KEY);
     const user = await User.findOne({ _id: checkMatching.id });
     if (!user) {
