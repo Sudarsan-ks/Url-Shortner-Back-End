@@ -60,7 +60,7 @@ router.get("/monthly", async (req, res) => {
 });
 
 
-router.get("/:shortUrl", async (req, res) => {
+router.get("/redirect/:shortUrl", async (req, res) => {
   const { shortUrl } = req.params;
   try {
     const url = await Url.findOne({ shortUrl });
