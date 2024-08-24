@@ -80,6 +80,7 @@ router.post("/forgotPassword", async (req, res) => {
       subject: "Password Reset",
       html: `<p>click<a href="${link}">here</a> to reset the password</p>`,
     });
+    res.status(200).json({ message: "Email sended Successfully" });
   } catch (err) {
     res
       .status(404)
