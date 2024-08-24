@@ -45,15 +45,15 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email: email });
-    const comparePass = bcrypt.compare(password, user.password);
-    if(!user){
+    if (!user) {
       return res.status(500).json({ message: "User not found" });
-    }
-    if (!user && !comparePass) {
-      return res.status(404).json({ message: "Invalid Credential" });
     }
     if (!user.isActive) {
       return res.status(404).json({ message: "Account not activated" });
+    }
+    const comparePass = await bcrypt.compare(password, user.password);
+    if (!comparePass) {
+      return res.status(404).json({ message: "Invalid Credential" });
     }
     const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1h",
@@ -85,12 +85,10 @@ router.post("/forgotPassword", async (req, res) => {
     });
     res.status(200).json({ message: "Email sended Successfully" });
   } catch (err) {
-    res
-      .status(404)
-      .json({
-        message: "Error while sending the forgot mail",
-        error: err.message,
-      });
+    res.status(404).json({
+      message: "Error while sending the forgot mail",
+      error: err.message,
+    });
   }
 });
 
@@ -112,12 +110,10 @@ router.post("/resetPassword/:token", async (req, res) => {
     if (err.name === "TokenExpiredError") {
       return res.status(400).json({ message: "Token has expired" });
     }
-    res
-      .status(404)
-      .json({
-        message: "Error while sending the forgot mail",
-        error: err.messager,
-      });
+    res.status(404).json({
+      message: "Error while sending the forgot mail",
+      error: err.messager,
+    });
   }
 });
 
@@ -134,12 +130,10 @@ router.get("/activate/:token", async (req, res) => {
     await user.save();
     res.status(201).json({ message: "Account Activated Successfully" });
   } catch (err) {
-    res
-      .status(404)
-      .json({
-        message: "Activation link as Invalid or Expire",
-        error: err.message,
-      });
+    res.status(404).json({
+      message: "Activation link as Invalid or Expire",
+      error: err.message,
+    });
   }
 });
 
