@@ -59,7 +59,6 @@ router.get("/monthly", async (req, res) => {
   }
 });
 
-
 router.get("/redirect/:shortUrl", async (req, res) => {
   const { shortUrl } = req.params;
   try {
@@ -78,10 +77,14 @@ router.get("/redirect/:shortUrl", async (req, res) => {
   }
 });
 
-router.get("/get/shortUrl", async (req, res) => {
+router.get("/get/shortUrl", auth, async (req, res) => {
+  const userID = req.user._id;
   try {
-    const urls = await Url.find();
-    res.status(200).json(urls);
+    const urls = await Url.find({ createdBy: userID });
+    if (urls.length === 0) {
+      return res.status(404).json({ message: "No URLs found for this user." });
+    }
+    res.status(200).json({ message: "Url fetched successfully", urls });
   } catch (err) {
     console.error(err);
     res
