@@ -46,6 +46,9 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: email });
     const comparePass = bcrypt.compare(password, user.password);
+    if(!user){
+      return res.status(500).json({ message: "User not found" });
+    }
     if (!user && !comparePass) {
       return res.status(404).json({ message: "Invalid Credential" });
     }
