@@ -33,11 +33,11 @@ router.post("/register", async (req, res) => {
       subject: "Password Reset",
       html: `<p>Click <a href="${activateUrl}">here</a> to Activate you account </p>`,
     });
-    res
-      .status(201)
-      .json({ message: "Registered successfully", newUser});
+    res.status(201).json({ message: "Registered successfully", newUser });
   } catch (err) {
-    res.status(400).json({ message: "Error while Registering", error: err.message });
+    res
+      .status(400)
+      .json({ message: "Error while Registering", error: err.message });
   }
 });
 
@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
 router.post("/forgotPassword", async (req, res) => {
   const { email } = req.body;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -83,7 +83,10 @@ router.post("/forgotPassword", async (req, res) => {
   } catch (err) {
     res
       .status(404)
-      .json({ message: "Error while sending the forgot mail", error: err.message });
+      .json({
+        message: "Error while sending the forgot mail",
+        error: err.message,
+      });
   }
 });
 
@@ -107,7 +110,10 @@ router.post("/resetPassword/:token", async (req, res) => {
     }
     res
       .status(404)
-      .json({ message: "Error while sending the forgot mail", error: err.messager });
+      .json({
+        message: "Error while sending the forgot mail",
+        error: err.messager,
+      });
   }
 });
 
@@ -126,7 +132,10 @@ router.get("/activate/:token", async (req, res) => {
   } catch (err) {
     res
       .status(404)
-      .json({ message: "Activation link as Invalid or Expire", error: err.message });
+      .json({
+        message: "Activation link as Invalid or Expire",
+        error: err.message,
+      });
   }
 });
 
