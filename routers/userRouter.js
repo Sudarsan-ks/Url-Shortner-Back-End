@@ -26,7 +26,7 @@ router.post("/register", async (req, res) => {
     });
     await newUser.save();
 
-    const activateUrl = `${process.env.CLIENT_URL}/activate/${confirmationToken}`;
+    const activateUrl = `${process.env.CLIENT_URL_NETLIFY}/activate/${confirmationToken}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -73,7 +73,7 @@ router.post("/forgotPassword", async (req, res) => {
     });
     user.confirmationToken = resetLink;
     await user.save();
-    const link = `${process.env.CLIENT_URL}/resetPassword/${resetLink}`;
+    const link = `${process.env.CLIENT_URL_NETLIFY}/resetPassword/${resetLink}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
