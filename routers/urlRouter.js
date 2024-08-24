@@ -82,7 +82,7 @@ router.get("/get/shortUrl", auth, async (req, res) => {
   try {
     const urls = await Url.find({ createdBy: userID });
     if (urls.length === 0) {
-      return res.status(404).json({ message: "No URLs found for this user." });
+      return res.status(501).json({ message: "No URLs found for this user." });
     }
     res.status(200).json({ message: "Url fetched successfully", urls });
   } catch (err) {
