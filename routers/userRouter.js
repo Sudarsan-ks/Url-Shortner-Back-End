@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Password Reset",
+      subject: "Account Acctivation",
       html: `<p>Click <a href="${activateUrl}">here</a> to Activate you account </p>`,
     });
     res.status(201).json({ message: "Registered successfully", newUser });
