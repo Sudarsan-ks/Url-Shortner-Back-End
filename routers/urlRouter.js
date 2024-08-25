@@ -30,6 +30,9 @@ router.get("/daily", async (req, res) => {
           count: { $sum: 1 },
         },
       },
+      {
+        $sort: { _id: 1 }
+      }
     ]);
     res.status(200).json({ message: "DailyCount", dailyCount });
   } catch (err) {
@@ -49,6 +52,9 @@ router.get("/monthly", async (req, res) => {
           count: { $sum: 1 },
         },
       },
+      {
+        $sort: { _id: 1 }
+      }
     ]);
     res.status(200).json({ message: "MonthlyCount", monthlyCount });
   } catch (err) {
